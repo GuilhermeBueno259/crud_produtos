@@ -1,4 +1,5 @@
 <?php
+
 namespace App\modelo;
 
 class Usuario {
@@ -22,6 +23,16 @@ class Usuario {
      * @var varchar(20)
      */
     private $usua_senha;
+
+    /**
+     * @var varchar(200)
+     */
+    private $usua_token;
+
+    /**
+     * @var datetime
+     */
+    private $usua_expiracao_token;
 
     public function __construct() {
     }

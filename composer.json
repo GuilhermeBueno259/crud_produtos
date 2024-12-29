@@ -10,5 +10,7 @@
             "email": "guibsc259@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    }
 }

@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Dao;
 
 use App\Modelo\Conexao;
 use App\modelo\Usuario;
 
 class UsuarioDao {
-    private Usuario $usuario;
+    public Usuario $usuario;
 
     private Conexao $conexao;
 
@@ -22,14 +23,27 @@ class UsuarioDao {
             $array_campos_insercao[] = $campo_insercao;
         }
 
-        $operacao = "INSERT INTO usuario (" . implode(", ", $array_campos_insercao) . ") VALUES (:" . implode(", :", $array_campos_insercao). ");";
+        $operacao = "INSERT INTO usuario (" . implode(", ", $array_campos_insercao) . ") VALUES (:" . implode(", :", $array_campos_insercao) . ");";
         return $this->conexao->executar($operacao, $valores_usuario);
     }
 
     public function editar() {
+        $valores_usuario = $this->usuario->retornarValores();
+
+        $array_campos_atualizacao = [];
+        foreach (array_keys($valores_usuario) as $campo_atualizacao) {
+            if ($campo_atualizacao != 'usua_codigo') {
+                $array_campos_atualizacao[] = "{$campo_atualizacao} = :{$campo_atualizacao}";
+            }
+        }
+
+        $operacao = "UPDATE usuario SET " . implode(', ', $array_campos_atualizacao) . " WHERE usua_codigo = :usua_codigo";
+        return $this->conexao->executar($operacao, $valores_usuario);
     }
 
-    public function deletar() {
+    public function excluir() {
+        $operacao = "DELETE FROM usuario WHERE usua_codigo = :usua_codigo";
+        return $this->conexao->executar($operacao, ['usua_codigo' => $this->usuario->usua_codigo]);
     }
 
     public function pesquisar() {
