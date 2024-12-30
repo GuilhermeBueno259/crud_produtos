@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Modelo;
+
 class Produto {
     /**
      * @var int
@@ -16,7 +19,7 @@ class Produto {
     private $prod_quantidade;
 
     /**
-     * @var decimal(4, 2)
+     * @var decimal(9, 2)
      */
     private $prod_preco;
 
@@ -34,5 +37,11 @@ class Produto {
 
     public function __get($campo) {
         return $this->$campo;
+    }
+
+    public function retornarValores() {
+        return array_filter(get_object_vars($this), function ($valor) {
+            return isset($valor);
+        });
     }
 }
